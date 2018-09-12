@@ -1,4 +1,7 @@
-import { createStackNavigator } from 'react-navigation';
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from 'react-navigation';
 
 import Home from './screens/Home';
 import NewDeck from './screens/NewDeck';
@@ -6,10 +9,9 @@ import Deck from './screens/Deck';
 import NewCard from './screens/NewCard';
 import Quiz from './screens/Quiz';
 
-const App = createStackNavigator(
+const HomeNavigator = createStackNavigator(
   {
     Home,
-    NewDeck,
     Deck,
     NewCard,
     Quiz
@@ -19,4 +21,9 @@ const App = createStackNavigator(
   }
 );
 
-export default App;
+const AppNavigator = createBottomTabNavigator({
+  Home: HomeNavigator,
+  NewDeck
+});
+
+export default AppNavigator;

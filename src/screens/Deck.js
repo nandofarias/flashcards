@@ -1,24 +1,45 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import DeckItem from '../components/DeckItem';
+import { getDeck } from '../utils/api';
 
 const Container = styled.View``;
-const Text = styled.Text``;
 const Button = styled.Button``;
 
 export default class Deck extends PureComponent {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam('title')
+    title: navigation.getParam('deck').title
   });
+
+  state = {
+    deck: this.props.navigation.getParam('deck')
+  };
+
+  componentDidMount() {
+    this.props.navigation.addListener('didFocus', () => this.fetchDeck());
+  }
+
+  fetchDeck = async () => {
+    const deck = await getDeck(this.state.deck.id);
+    this.setState({ deck });
+  };
   render() {
+    const { deck } = this.state;
     const { navigation } = this.props;
+    const cards = deck.cards ? Object.values(deck.cards) : [];
     return (
       <Container>
-        <Text>Deck</Text>
-        <Button onPress={() => navigation.push('NewCard')} title="Novo Card" />
+        <DeckItem deck={deck} />
         <Button
-          onPress={() => navigation.push('Quiz')}
-          title="Começar o Quiz"
+          onPress={() => navigation.push('NewCard', { deckId: deck.id })}
+          title="Novo Card"
         />
+        {cards.length > 0 && (
+          <Button
+            onPress={() => navigation.push('Quiz', { cards })}
+            title="Começar o Quiz"
+          />
+        )}
       </Container>
     );
   }

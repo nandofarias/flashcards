@@ -1,17 +1,19 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import CardForm from '../components/CardForm';
 
 const Container = styled.View``;
-const Text = styled.Text``;
 
 export default class NewCard extends PureComponent {
   static navigationOptions = {
-    title: 'Novo Card'
+    title: 'Nova Carta'
   };
   render() {
+    const { navigation } = this.props;
+    const deckId = navigation.getParam('deckId');
     return (
       <Container>
-        <Text>New Card</Text>
+        <CardForm deckId={deckId} onFinished={() => navigation.goBack()} />
       </Container>
     );
   }

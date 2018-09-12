@@ -1,17 +1,15 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import DeckForm from '../components/DeckForm';
 
-const Container = styled.View``;
-const Text = styled.Text``;
+const Container = styled.SafeAreaView``;
 
 export default class NewDeck extends PureComponent {
-  static navigationOptions = {
-    title: 'Novo Deck'
-  };
+  onFinished = deck => this.props.navigation.navigate('Deck', { deck });
   render() {
     return (
       <Container>
-        <Text>New Deck</Text>
+        <DeckForm onFinished={this.onFinished} />
       </Container>
     );
   }

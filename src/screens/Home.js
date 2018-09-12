@@ -3,47 +3,30 @@ import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import ListDecks from '../components/ListDecks';
 import DeckItem from '../components/DeckItem';
+import { getDecks } from '../utils/api';
 
 const Container = styled.View``;
-const Button = styled.Button``;
-
-const decks = [
-  {
-    id: 1,
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer:
-          'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-];
 
 export default class Home extends PureComponent {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'Home',
-    headerRight: (
-      <Button onPress={() => navigation.push('NewDeck')} title="Novo" />
-    )
-  });
+  static navigationOptions = {
+    title: 'Home'
+  };
+
+  state = {
+    decks: null
+  };
+
+  componentDidMount() {
+    this.props.navigation.addListener('didFocus', () => this.fetchDecks());
+  }
+
+  fetchDecks = async () => {
+    const decks = await getDecks();
+    this.setState({ decks });
+  };
   render() {
     const { navigation } = this.props;
+    const { decks } = this.state;
     return (
       <Container>
         <ListDecks>
@@ -51,7 +34,7 @@ export default class Home extends PureComponent {
             decks.map(deck => (
               <TouchableOpacity
                 key={deck.id}
-                onPress={() => navigation.push('Deck', { title: deck.title })}
+                onPress={() => navigation.push('Deck', { deck })}
               >
                 <DeckItem deck={deck} />
               </TouchableOpacity>
