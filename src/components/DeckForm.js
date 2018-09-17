@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { saveDeck } from '../utils/api';
 
 const Button = styled.Button``;
-const TextInput = styled.TextInput``;
+const TextInput = styled.TextInput`
+  padding: 15px 10px;
+  background-color: white;
+`;
 const Container = styled.View``;
 
 export default class DeckForm extends PureComponent {
@@ -22,7 +25,7 @@ export default class DeckForm extends PureComponent {
     return (
       <Container>
         <TextInput
-          placeholder="Titulo do Baralho"
+          placeholder="Titulo do baralho"
           value={this.state.title}
           onChangeText={title => this.setState({ title })}
           returnKeyType="done"

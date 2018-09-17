@@ -2,9 +2,16 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { saveCard } from '../utils/api';
 
-const Button = styled.Button``;
-const TextInput = styled.TextInput``;
 const Container = styled.View``;
+const Button = styled.Button``;
+const TextInput = styled.TextInput`
+  padding: 15px 10px;
+  background-color: white;
+`;
+const Separator = styled.View`
+  height: 0.7px;
+  background-color: lightgray;
+`;
 
 export default class CardForm extends PureComponent {
   state = {
@@ -28,6 +35,7 @@ export default class CardForm extends PureComponent {
           onSubmitEditing={() => this.answerInput.focus()}
           blurOnSubmit={false}
         />
+        <Separator />
         <TextInput
           placeholder="Insira a resposta aqui"
           onChangeText={answer => this.setState({ answer })}

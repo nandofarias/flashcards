@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import CardForm from '../components/CardForm';
 
-const Container = styled.View``;
+const Container = styled.SafeAreaView``;
 
 export default class NewCard extends PureComponent {
   static navigationOptions = {
